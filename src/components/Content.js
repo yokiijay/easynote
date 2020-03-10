@@ -7,9 +7,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun, faFont } from '@fortawesome/free-solid-svg-icons'
 import ToolButton from './Toolbar/ToolButton'
 import Toolbar from './Toolbar'
+import EditBar from './EditBar'
 
 const Content = () => {
   const { theme, setThemeMode } = useThemeModel()
+  const [showEditBar, setShowEditBar] = useState(false)
+  
+  const toggleShoweditBar = ()=>{
+    setShowEditBar(!showEditBar)
+  }
 
   return (
     <div
@@ -46,7 +52,8 @@ const Content = () => {
         position: absolute;
         right: 20px;
         bottom: 40px;
-      `} />
+      `} toggleEditBar={toggleShoweditBar} />
+      <EditBar showEditBar={showEditBar} />
     </div>
   )
 }

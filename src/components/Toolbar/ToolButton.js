@@ -28,8 +28,8 @@ const ToolButton = ({ icon, size, variant, ...props }) => {
   return (
     <motion.div
       css={css`
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
