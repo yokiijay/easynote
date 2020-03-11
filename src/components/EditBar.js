@@ -1,18 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
-import styled from '@emotion/styled'
 import useThemeModel from '../models/useThemeModel'
 import useEditbarModal from '../models/useEditbarModal'
+import { motion } from 'framer-motion'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMouse } from '@fortawesome/free-solid-svg-icons'
 
-const EditBar = ({showEditBar}) => {
+const EditBar = ({ showEditBar }) => {
   const { theme } = useThemeModel()
   const { editList, selectEdit } = useEditbarModal()
+  const [ifDrag, setIfDrag] = useState(false)
+
+  const toggleDragable = ()=>{
+    setIfDrag(!ifDrag)
+  }
 
   return (
-    <div
+    <motion.div
+      drag={ifDrag}
+      dragMomentum={false}
       css={css`
-        display: ${showEditBar?'block':'none'};
+        display: ${showEditBar ? 'block' : 'none'};
+        z-index: 999;
         position: absolute;
         right: 20px;
         bottom: 200px;
@@ -44,6 +54,18 @@ const EditBar = ({showEditBar}) => {
         }
       `}
     >
+      <FontAwesomeIcon
+        css={css`
+          display: block;
+          margin-left: auto;
+          margin-bottom: 4px;
+          cursor: pointer;
+        `}
+        color={ifDrag?theme.color.body:theme.color.hint}
+        size='xs'
+        icon={faMouse}
+        onClick={toggleDragable}
+      />
       {editList.map(item => (
         <div
           key={item.behave}
@@ -51,10 +73,9 @@ const EditBar = ({showEditBar}) => {
           css={css`
             position: relative;
             cursor: pointer;
-            opacity: ${item.active?1:.5};
+            opacity: ${item.active ? 1 : 0.5};
           `}
-
-          onClick={()=>selectEdit(item.behave)}
+          onClick={() => selectEdit(item.behave)}
         >
           <div
             css={css`
@@ -71,7 +92,7 @@ const EditBar = ({showEditBar}) => {
           {item.content}
         </div>
       ))}
-    </div>
+    </motion.div>
   )
 }
 

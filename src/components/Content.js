@@ -11,7 +11,7 @@ import EditBar from './EditBar'
 
 const Content = () => {
   const { theme, setThemeMode } = useThemeModel()
-  const [showEditBar, setShowEditBar] = useState(false)
+  const [showEditBar, setShowEditBar] = useState(true)
   
   const toggleShoweditBar = ()=>{
     setShowEditBar(!showEditBar)
@@ -53,7 +53,7 @@ const Content = () => {
         right: 20px;
         bottom: 40px;
       `} toggleEditBar={toggleShoweditBar} />
-      <EditBar showEditBar={showEditBar} />
+      {showEditBar && <EditBar showEditBar={showEditBar} />}
     </div>
   )
 }

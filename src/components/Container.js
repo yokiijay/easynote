@@ -22,7 +22,7 @@ const Container = () => {
       css={css`
         width: ${zoom?'100%':between('300px', '900px')};
         height: ${zoom?'100%':between('80vh', '80vh')};
-        border-radius: 15px;
+        border-radius: ${zoom?0:'15px'};
         transition: .4s;
         background: ${theme.background.base};
         box-shadow: 0 3px 40px ${theme.color.shadow};
