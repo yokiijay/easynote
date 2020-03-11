@@ -1,6 +1,7 @@
 const list = [
   {
     uid: '31231dasde3e',
+    catagory: 'note|todo',
     contentId: '32je2e',
     createdTime: '2020-03-10',
     updatedTime: '2020-03-11 00:52:49',

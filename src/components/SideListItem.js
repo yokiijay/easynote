@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import useThemeModel from '../models/useThemeModel'
 import { ellipsis } from 'polished'
 import { motion } from 'framer-motion'
 import SideListItemDel from './SideListItemDel'
-import useModalModel from '../models/useModalModel'
+import { useHistory } from 'react-router-dom'
 
-const SideListItem = ({ sideListOn, deleteItem, id, ...props }) => {
+const SideListItem = ({ sideListOn, deleteItem, data, ...props }) => {
   const { theme } = useThemeModel()
   const [showDel, setShowDel] = useState(false)
-  const { openModal } = useModalModel()
+
+  const history = useHistory()
 
   const handleMouseOver = () => {
     setShowDel(true)
@@ -20,9 +21,13 @@ const SideListItem = ({ sideListOn, deleteItem, id, ...props }) => {
     setShowDel(false)
   }
 
+  const handleTap = () => {
+    history.push(`/${data.catagory}/${data.contentId}`)
+  }
+
   return (
     <motion.div
-      onTap={()=>openModal({title: '请充值', description: '充值一万块钱好不好'})}
+      onTap={handleTap}
       onHoverStart={handleMouseOver}
       onHoverEnd={handleMouseOut}
       css={css`
@@ -64,7 +69,7 @@ const SideListItem = ({ sideListOn, deleteItem, id, ...props }) => {
       }}
       {...props}
     >
-      <h4>🌈🌈Easynote真牛逼👍啊真牛逼</h4>
+      <h4>{data.content.title}</h4>
       <p>牛逼就牛逼在什么文章都可以写，强的一批</p>
       <div className='time'>
         <span className='time-date'>2020-03-10</span>
@@ -72,13 +77,14 @@ const SideListItem = ({ sideListOn, deleteItem, id, ...props }) => {
       </div>
       <SideListItemDel
         deleteItem={deleteItem}
-        id={id}
+        id={data.contentId}
         css={css`
           position: absolute;
           right: 6px;
           top: 6px;
           display: ${showDel ? 'block' : 'none'};
         `}
+        data={data}
       />
     </motion.div>
   )

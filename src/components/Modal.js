@@ -1,4 +1,3 @@
-import React from 'react'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import { position } from 'polished'
@@ -8,7 +7,7 @@ import { motion } from 'framer-motion'
 
 const Modal = ({ ...props }) => {
   const { theme } = useThemeModel()
-  const { modal, openModal, closeModal } = useModalModel()
+  const { modal, closeModal } = useModalModel()
 
   const handleThinkTap = () => {
     closeModal()

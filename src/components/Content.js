@@ -1,19 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import useThemeModel from '../models/useThemeModel'
 import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMoon, faSun, faFont } from '@fortawesome/free-solid-svg-icons'
-import ToolButton from './Toolbar/ToolButton'
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import Toolbar from './Toolbar'
 import EditBar from './EditBar'
+import useSideListModel from '../models/useSideListModel'
+import { useParams } from 'react-router-dom'
 
 const Content = () => {
   const { theme, setThemeMode } = useThemeModel()
   const [showEditBar, setShowEditBar] = useState(true)
+
   
-  const toggleShoweditBar = ()=>{
+  const { contentId } = useParams()
+  const {list} = useSideListModel()
+
+  const data = useMemo(()=>list.find(item=>(
+    item.contentId === contentId
+  )),[list, contentId])
+
+  const toggleShoweditBar = () => {
     setShowEditBar(!showEditBar)
   }
 
@@ -37,22 +46,29 @@ const Content = () => {
         }
       `}
     >
-      <h1>今天吃水果</h1>
+      <h1>{data.content.title}</h1>
       <p className='time'>2020-03-10 3小时前</p>
       <StyledButton
         theme={theme}
         onClick={() => {
-          theme.mode==='dark'?setThemeMode('default'):setThemeMode('dark')
+          theme.mode === 'dark' ? setThemeMode('default') : setThemeMode('dark')
         }}
       >
-        <FontAwesomeIcon style={{marginRight: '10px'}} size='lg' icon={theme.mode==='dark'?faSun:faMoon} />
-        {theme.mode==='dark' ? '切换亮色模式' : '切换暗色模式'}
+        <FontAwesomeIcon
+          style={{ marginRight: '10px' }}
+          size='lg'
+          icon={theme.mode === 'dark' ? faSun : faMoon}
+        />
+        {theme.mode === 'dark' ? '切换亮色模式' : '切换暗色模式'}
       </StyledButton>
-      <Toolbar css={css`
-        position: absolute;
-        right: 20px;
-        bottom: 40px;
-      `} toggleEditBar={toggleShoweditBar} />
+      <Toolbar
+        css={css`
+          position: absolute;
+          right: 20px;
+          bottom: 40px;
+        `}
+        toggleEditBar={toggleShoweditBar}
+      />
       {showEditBar && <EditBar showEditBar={showEditBar} />}
     </div>
   )

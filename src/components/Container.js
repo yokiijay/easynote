@@ -15,7 +15,7 @@ const Container = () => {
 
   const { theme } = useThemeModel()
 
-  const {zoom, toggleZoom} = useZoomModal()
+  const {zoom} = useZoomModal()
 
   return (
     <div

@@ -3,6 +3,7 @@ import React from 'react'
 import { jsx, css } from '@emotion/core'
 import SideList from './SideList'
 import Content from './Content'
+import { Route } from 'react-router-dom'
 
 const Body = ({sideListOn}) => {
 
@@ -14,7 +15,10 @@ const Body = ({sideListOn}) => {
       /* flex: 1; */
     `}>
       <SideList sideListOn={sideListOn} />
-      <Content />
+
+      <Route exact path={`/note/:contentId`}>
+        <Content />
+      </Route>
     </div>
   )
 }

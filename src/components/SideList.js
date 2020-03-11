@@ -1,39 +1,18 @@
-import React, { useState } from 'react'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import { between } from 'polished'
 import { motion, AnimatePresence } from 'framer-motion'
 import useThemeModel from '../models/useThemeModel'
+import useSideListModel from '../models/useSideListModel'
 import SideListItem from './SideListItem'
-import { uuid } from 'uuidv4'
-
-const initData = [
-  {
-    id: uuid()
-  },
-  {
-    id: uuid()
-  },
-  {
-    id: uuid()
-  },
-  {
-    id: uuid()
-  },
-  {
-    id: uuid()
-  },
-  {
-    id: uuid()
-  }
-]
 
 const SideList = ({ sideListOn }) => {
   const { theme } = useThemeModel()
-  const [list, setList] = useState(initData)
+  const {list, setList} = useSideListModel()
+  console.log( list )
 
   const handleDeleteItem = id => {
-    setList(state => state.filter(item => (item.id === id ? false : true)))
+    setList(state => state.filter(item => (item.contentId === id ? false : true)))
   }
 
   return (
@@ -63,7 +42,7 @@ const SideList = ({ sideListOn }) => {
       }}
     >
       <AnimatePresence>
-        {list.map((data,i) => (
+        {list.map((data, i) => (
           <SideListItem
             key={data.id}
             sideListOn={sideListOn}
@@ -80,10 +59,10 @@ const SideList = ({ sideListOn }) => {
               opacity: 0
             }}
             transition={{
-              duration: .2,
-              delay: .06*i
+              duration: 0.2,
+              delay: 0.06 * i
             }}
-            id={data.id}
+            data={data}
             deleteItem={handleDeleteItem}
             positionTransition
           />

@@ -1,14 +1,10 @@
-import React from 'react'
-import Header from './components/Header'
 /** @jsx jsx */
 import { jsx, css, Global } from '@emotion/core'
-import { between } from 'polished'
-import Container from './components/Container'
 import useThemeModel from './models/useThemeModel'
-import Toolbar from './components/Toolbar'
 import Modal from './components/Modal'
 import { AnimatePresence } from 'framer-motion'
 import useModalModel from './models/useModalModel'
+import MainAppRouter from './Router'
 
 const App = () => {
   const { theme } = useThemeModel()
@@ -38,7 +34,8 @@ const App = () => {
           }
         `}
       />
-      <Container />
+
+      <MainAppRouter />
 
       <AnimatePresence>
         {modal.onOff && (

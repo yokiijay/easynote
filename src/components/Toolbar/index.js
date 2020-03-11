@@ -1,6 +1,4 @@
 import React from 'react'
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core'
 import ToolButton from './ToolButton'
 import {
   faFont,

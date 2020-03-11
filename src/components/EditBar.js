@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import useThemeModel from '../models/useThemeModel'
