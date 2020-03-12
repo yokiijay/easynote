@@ -15,7 +15,7 @@ const initData = [
         {
           id: uuid(),
           behave: 'h1',
-          content: 'dasdafafadasdad'
+          content: 'dasdafafadasdad',
         },
         {
           id: uuid(),

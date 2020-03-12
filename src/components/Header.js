@@ -3,6 +3,7 @@ import React from 'react'
 import { jsx, css } from '@emotion/core'
 import MenuBar from './MenuBar'
 import useThemeModel from '../models/useThemeModel'
+import AppSwitch from './AppSwitch'
 
 const Header = ({toggleSideListOn}) => {
   const {theme} = useThemeModel()
@@ -16,6 +17,7 @@ const Header = ({toggleSideListOn}) => {
       align-items: center;
     `}>
       <MenuBar toggleSideListOn={toggleSideListOn} />
+      <AppSwitch />
     </div>
   )
 }

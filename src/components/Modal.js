@@ -73,7 +73,7 @@ const Modal = ({ ...props }) => {
             color: ${theme.button.color};
           }
         `}
-        onClick={ev => ev.stopPropagation()}
+        onClick={ev => ev.stopPropagation()} // 阻止事件冒泡
         {...props}
       >
         <h3>{modal.title}</h3>

@@ -10,7 +10,7 @@ const SideList = ({ sideListOn }) => {
   const { theme } = useThemeModel()
   const {list, setList} = useSideListModel()
 
-  const handleDeleteItem = id => {
+  const deleteItem = id => {
     setList(state => state.filter(item => (item.contentId === id ? false : true)))
   }
 
@@ -62,7 +62,7 @@ const SideList = ({ sideListOn }) => {
               delay: 0.06 * i
             }}
             data={data}
-            deleteItem={handleDeleteItem}
+            deleteItem={deleteItem}
             positionTransition
           />
         ))}

@@ -9,15 +9,15 @@ const SideListItemDel = ({ deleteItem , data, id, ...props }) => {
   const { theme } = useThemeModel()
   const history = useHistory()
 
-  const handleDeleteItem = ev=>{
-    ev.stopPropagation()
+  const handleClick = ev=>{
+    ev.stopPropagation() // 阻止事件冒泡
     deleteItem(id)
     history.push(`/${data.catagory}`)
   }
 
   return (
     <div
-      onClick={handleDeleteItem}
+      onClick={handleClick}
       css={css`
         padding: 2px 8px;
         background: ${theme.background.backdrop};
