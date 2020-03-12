@@ -1,26 +1,26 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import useThemeModel from '../models/useThemeModel'
-import styled from '@emotion/styled'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import Toolbar from './Toolbar'
 import EditBar from './EditBar'
 import useSideListModel from '../models/useSideListModel'
 import { useParams } from 'react-router-dom'
+import EditCell from './EditCell'
+import useEditbarModal from '../models/useEditbarModal'
 
 const Content = () => {
-  const { theme, setThemeMode } = useThemeModel()
-  const [showEditBar, setShowEditBar] = useState(true)
+  const { theme } = useThemeModel()
+  const [showEditBar, setShowEditBar] = useState(false)
+  const {currentBehave} = useEditbarModal()
 
-  
   const { contentId } = useParams()
-  const {list} = useSideListModel()
+  const { list, appenBody } = useSideListModel()
 
-  const data = useMemo(()=>list.find(item=>(
-    item.contentId === contentId
-  )),[list, contentId])
+  const data = useMemo(() => list.find(item => item.contentId === contentId), [
+    list,
+    contentId
+  ])
 
   const toggleShoweditBar = () => {
     setShowEditBar(!showEditBar)
@@ -30,37 +30,51 @@ const Content = () => {
     <div
       css={css`
         position: relative;
-        display: flex;
+        /* display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: stretch; */
         flex: 1;
+        padding: 0 20px;
 
         h1 {
           margin: 10px;
+          text-align: center;
         }
         p.time {
           margin: 0;
           padding: 0;
           font-size: 12px;
           color: ${theme.color.hint};
+          text-align: center;
         }
       `}
     >
       <h1>{data.content.title}</h1>
       <p className='time'>2020-03-10 3小时前</p>
-      <StyledButton
-        theme={theme}
-        onClick={() => {
-          theme.mode === 'dark' ? setThemeMode('default') : setThemeMode('dark')
-        }}
-      >
-        <FontAwesomeIcon
-          style={{ marginRight: '10px' }}
-          size='lg'
-          icon={theme.mode === 'dark' ? faSun : faMoon}
-        />
-        {theme.mode === 'dark' ? '切换亮色模式' : '切换暗色模式'}
-      </StyledButton>
+
+      {data.content.body.map((item, index) => (
+        <EditCell
+          key={item.id}
+          behave={item.behave}
+          preventDefault
+          onKeyDown={key => {
+            switch (key) {
+              case 'Enter':
+                appenBody({
+                  contentId,
+                  index,
+                  behave: currentBehave,
+                })
+                break
+              default:
+                return
+            }
+          }}
+        >
+          {item.content}
+        </EditCell>
+      ))}
+
       <Toolbar
         css={css`
           position: absolute;
@@ -73,16 +87,5 @@ const Content = () => {
     </div>
   )
 }
-
-const StyledButton = styled.button`
-  margin: 20px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  background: ${props => props.theme.button.background};
-  color: ${props => props.theme.button.color};
-  outline: none;
-  cursor: pointer;
-`
 
 export default React.memo(Content)

@@ -1,5 +1,5 @@
-import { createModel } from "hox";
-import { useState } from "react";
+import { createModel } from 'hox'
+import { useState } from 'react'
 
 const initList = [
   {
@@ -26,28 +26,31 @@ const initList = [
     active: 0,
     behave: 'link',
     content: '链接'
-  },
+  }
 ]
 
-function useEditBar(){
+function useEditBar() {
   const [editList, setEditList] = useState(initList)
 
-  const selectEdit = (behave)=>{
-    setEditList(prevList=>(
-      editList.map(item=>{
-        if(behave===item.behave){
+  const selectEdit = behave => {
+    setEditList(prevList =>
+      editList.map(item => {
+        if (behave === item.behave) {
           item.active = 1
-        }else {
+        } else {
           item.active = 0
         }
         return item
       })
-    ))
+    )
   }
+
+  const currentBehave = behave => editList.find(item => item.active).behave
 
   return {
     editList,
-    selectEdit
+    selectEdit,
+    currentBehave
   }
 }
 

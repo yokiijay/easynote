@@ -9,7 +9,6 @@ import SideListItem from './SideListItem'
 const SideList = ({ sideListOn }) => {
   const { theme } = useThemeModel()
   const {list, setList} = useSideListModel()
-  console.log( list )
 
   const handleDeleteItem = id => {
     setList(state => state.filter(item => (item.contentId === id ? false : true)))
