@@ -5,10 +5,12 @@ import Modal from './components/Modal'
 import { AnimatePresence } from 'framer-motion'
 import useModalModel from './models/useModalModel'
 import MainAppRouter from './Router'
+import { useState } from 'react'
 
 const App = () => {
   const { theme } = useThemeModel()
   const { modal } = useModalModel()
+  const [count, setCount] = useState(0)
 
   return (
     <div
@@ -56,15 +58,9 @@ const App = () => {
         )}
       </AnimatePresence>
 
-      {/* <Toolbar
-        css={css`
-          position: fixed;
-          right: 40px;
-          bottom: 80px;
-        `}
-      /> */}
     </div>
   )
 }
+
 
 export default App
